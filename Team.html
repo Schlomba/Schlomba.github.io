@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Meet the Leafy Business Team</title>
+<style>
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f1e9;
+    color: #2f3e2e;
+  }
+
+  /* ---------- HEADER ---------- */
+
+  header {
+    background-color: #3f6b3a;
+    color: white;
+    padding: 30px 20px 20px 20px;
+    text-align: center;
+    position: relative; /* establishes a positioning context for the tagline badge */
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.4em;
+  }
+
+  header p.subtitle {
+    margin: 5px 0 0 0;
+    font-style: italic;
+  }
+
+  /* A little ribbon badge, absolutely positioned relative to the header */
+  .est-badge {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    background-color: #e8b23d;
+    color: #3f3f3f;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85em;
+    transform: rotate(4deg);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* ---------- NAVIGATION ---------- */
+
+  nav {
+    background-color: #2f3e2e;
+    position: sticky;   /* stays visible as the user scrolls */
+    top: 0;
+    z-index: 100;
+    padding: 12px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+  }
+
+  nav ul li a {
+    color: #f4f1e9;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+
+  nav ul li a:hover {
+    color: #e8b23d;
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+
+  main {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  section {
+    scroll-margin-top: 60px; /* keeps the sticky nav from covering the section heading when jumped to */
+    padding: 50px 0;
+    border-bottom: 1px solid #d8d2c2;
+  }
+
+  section:last-of-type {
+    border-bottom: none;
+  }
+
+  section h2 {
+    text-align: center;
+    color: #3f6b3a;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  /* ---------- HOME SECTION ---------- */
+
+  #home .hero {
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  #home .hero p {
+    max-width: 600px;
+    margin: 10px auto 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ---------- ABOUT SECTION ---------- */
+
+  #about p {
+    max-width: 700px;
+    margin: 0 auto 15px auto;
+    line-height: 1.6;
+  }
+
+  /* ---------- SERVICES SECTION (float layout) ---------- */
+
+  .service-box {
+    float: left;
+    width: 31%;
+    margin: 0 3.5% 20px 0;
+    background-color: white;
+    border: 1px solid #d8d2c2;
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .service-box:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  .service-box h3 {
+    color: #3f6b3a;
+    margin-top: 5px;
+  }
+
+  .service-box .icon {
+    font-size: 2em;
+  }
+
+  #services::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  /* ---------- CONTACT SECTION ---------- */
+
+  #contact {
+    position: relative; /* positioning context for the "open" badge */
+  }
+
+  #contact .contact-box {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid #d8d2c2;
+    border-radius: 8px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.08);
+  }
+
+  #contact .contact-box p {
+    margin: 8px 0;
+  }
+
+  .open-badge {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    background-color: #7fae6d;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.85em;
+    transform: rotate(-4deg);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* ---------- TEAM MEMBER CARDS (float layout) ---------- */
+
+  .team-member {
+    background-color: white;
+    border: 1px solid #d8d2c2;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 30px;
+    overflow: auto; /* clears the floated image so the card wraps it properly */
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.08);
+    position: relative; /* positioning context for the little leaf tag */
+  }
+
+  .member-photo {
+    float: left;               /* photo floats left, text wraps beside it */
+    width: 140px;
+    height: 140px;
+    border-radius: 8px;
+    margin: 0 20px 10px 0;
+    border: 3px solid #e8b23d;
+    overflow: hidden;
+    background-color: #fdfaf1;
+  }
+
+  .member-photo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Alternate every other card so photos float right for visual variety */
+  .team-member.reverse .member-photo {
+    float: right;
+    margin: 0 0 10px 20px;
+  }
+
+  .team-member h3 {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    color: #3f6b3a;
+  }
+
+  .team-member .title {
+    font-weight: bold;
+    font-style: italic;
+    color: #8a7a4a;
+    margin-bottom: 10px;
+  }
+
+  .team-member p.bio {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Small positioned "leaf" tag in the corner of each card */
+  .leaf-tag {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: #7fae6d;
+    color: white;
+    font-size: 0.75em;
+    padding: 4px 8px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2f3e2e;
+    color: #f4f1e9;
+    font-size: 0.85em;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The Leafy Business Team</h1>
+  <p class="subtitle">Rooted in excellence since 2019</p>
+  <div class="est-badge">100% Organic Staff</div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#team">Meet the Team</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="home">
+  <div class="hero">
+    <h2>Welcome to the Leafy Business Team</h2>
+    <p>We're a small but mighty group of houseplants working hard (and photosynthesizing harder) to bring a little green energy to every office we're placed in. Scroll down to learn more about us, meet the team, and see what we offer.</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>Founded on a sunny windowsill in 2019, the Leafy Business Team started as a single fern with big ambitions. Since then, we've grown (pun intended) into a full roster of plants dedicated to office morale, air quality, and the occasional dramatic wilt for attention.</p>
+  <p>We believe every workspace deserves a little greenery, a lot of personality, and a consistent watering schedule. Our team is rooted in collaboration, growth, and mutual respect for each other's sunlight needs.</p>
+</section>
+
+<section id="team">
+  <h2>Meet the Team</h2>
+
+  <div class="team-member">
+    <div class="leaf-tag">🌿</div>
+    <div class="member-photo">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Fernando Fronds, a fern in a terracotta pot">
+        <rect width="140" height="140" fill="#eaf3e4"/>
+        <ellipse cx="70" cy="120" rx="45" ry="8" fill="#c9c2ae" opacity="0.5"/>
+        <path d="M40 130 L48 90 L92 90 L100 130 Z" fill="#c9713f"/>
+        <path d="M40 130 L48 90 L92 90 L100 130 Z" fill="none" stroke="#a85a30" stroke-width="2"/>
+        <rect x="44" y="84" width="52" height="10" rx="2" fill="#d98452"/>
+        <g stroke="#3f6b3a" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M70 88 C70 60 40 55 25 30"/>
+          <path d="M70 88 C70 60 100 55 115 30"/>
+          <path d="M70 88 C68 50 68 40 65 15"/>
+          <path d="M70 88 C55 55 45 45 30 45"/>
+          <path d="M70 88 C85 55 95 45 110 45"/>
+        </g>
+        <g fill="#4f8a45">
+          <ellipse cx="30" cy="32" rx="7" ry="3" transform="rotate(-40 30 32)"/>
+          <ellipse cx="42" cy="20" rx="7" ry="3" transform="rotate(-55 42 20)"/>
+          <ellipse cx="110" cy="32" rx="7" ry="3" transform="rotate(40 110 32)"/>
+          <ellipse cx="98" cy="20" rx="7" ry="3" transform="rotate(55 98 20)"/>
+          <ellipse cx="65" cy="18" rx="6" ry="3" transform="rotate(-5 65 18)"/>
+        </g>
+      </svg>
+    </div>
+    <h3>Fernando Fronds</h3>
+    <p class="title">Chief Leafing Officer</p>
+    <p class="bio">Fernando has been reaching for the sunlight since day one. Known for his calm demeanor and occasional dramatic leaf-drop when he doesn't get watered on time, he leads the team with quiet, photosynthetic confidence. Hobbies include standing very still and judging everyone's watering schedule.</p>
+  </div>
+
+  <div class="team-member reverse">
+    <div class="leaf-tag">🌵</div>
+    <div class="member-photo">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Prickle Von Spikerson, a cactus in a pot">
+        <rect width="140" height="140" fill="#fdf3e0"/>
+        <ellipse cx="70" cy="120" rx="45" ry="8" fill="#c9c2ae" opacity="0.5"/>
+        <path d="M42 130 L48 96 L92 96 L98 130 Z" fill="#e8b23d"/>
+        <path d="M42 130 L48 96 L92 96 L98 130 Z" fill="none" stroke="#c8922a" stroke-width="2"/>
+        <rect x="45" y="90" width="50" height="10" rx="2" fill="#f0c266"/>
+        <rect x="58" y="30" width="24" height="66" rx="12" fill="#5a9e52"/>
+        <path d="M58 55 Q35 55 35 40 Q35 30 45 30 Q58 30 58 50 Z" fill="#5a9e52"/>
+        <path d="M82 65 Q105 65 105 50 Q105 40 95 40 Q82 40 82 60 Z" fill="#5a9e52"/>
+        <g stroke="#3f6b3a" stroke-width="1">
+          <line x1="62" y1="35" x2="62" y2="93"/>
+          <line x1="70" y1="30" x2="70" y2="96"/>
+          <line x1="78" y1="35" x2="78" y2="93"/>
+        </g>
+        <g fill="#2f3e2e">
+          <circle cx="62" cy="40" r="1.3"/><circle cx="62" cy="55" r="1.3"/><circle cx="62" cy="70" r="1.3"/><circle cx="62" cy="85" r="1.3"/>
+          <circle cx="70" cy="36" r="1.3"/><circle cx="70" cy="50" r="1.3"/><circle cx="70" cy="65" r="1.3"/><circle cx="70" cy="80" r="1.3"/>
+          <circle cx="78" cy="40" r="1.3"/><circle cx="78" cy="55" r="1.3"/><circle cx="78" cy="70" r="1.3"/><circle cx="78" cy="85" r="1.3"/>
+        </g>
+        <circle cx="70" cy="26" r="6" fill="#e05d8f"/>
+      </svg>
+    </div>
+    <h3>Prickle Von Spikerson</h3>
+    <p class="title">Head of Security</p>
+    <p class="bio">Don't let the small pot fool you, Prickle takes his job very seriously. He hasn't needed water in three weeks and isn't afraid to remind everyone about it. His motto: "Trust issues are just good boundaries." Enjoys long naps on sunny windowsills.</p>
+  </div>
+
+  <div class="team-member">
+    <div class="leaf-tag">🌱</div>
+    <div class="member-photo">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Sprout Fitzgerald III, a small seedling in a pot">
+        <rect width="140" height="140" fill="#eef6ea"/>
+        <ellipse cx="70" cy="120" rx="45" ry="8" fill="#c9c2ae" opacity="0.5"/>
+        <path d="M46 130 L52 100 L88 100 L94 130 Z" fill="#8a7a4a"/>
+        <path d="M46 130 L52 100 L88 100 L94 130 Z" fill="none" stroke="#6d6039" stroke-width="2"/>
+        <rect x="49" y="94" width="42" height="9" rx="2" fill="#9c8a56"/>
+        <path d="M70 100 C70 85 70 75 70 60" stroke="#4f8a45" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M70 78 C70 78 55 78 50 65 C60 62 68 68 70 78 Z" fill="#6fb35f"/>
+        <path d="M70 68 C70 68 85 68 90 55 C80 52 72 58 70 68 Z" fill="#6fb35f"/>
+        <circle cx="70" cy="58" r="6" fill="#7fae6d"/>
+      </svg>
+    </div>
+    <h3>Sprout Fitzgerald III</h3>
+    <p class="title">Junior Growth Analyst</p>
+    <p class="bio">The newest member of the team, Sprout is small but ambitious. He's already grown two whole leaves this month and won't stop growing more. Colleagues describe him as "enthusiastic" and "possibly a weed, we're not totally sure yet."</p>
+  </div>
+
+  <div class="team-member reverse">
+    <div class="leaf-tag">🍃</div>
+    <div class="member-photo">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Basilinda Herbington-Sage, a basil plant in a pot">
+        <rect width="140" height="140" fill="#f2f7ea"/>
+        <ellipse cx="70" cy="120" rx="45" ry="8" fill="#c9c2ae" opacity="0.5"/>
+        <path d="M43 130 L50 92 L90 92 L97 130 Z" fill="#b9552e"/>
+        <path d="M43 130 L50 92 L90 92 L97 130 Z" fill="none" stroke="#96431f" stroke-width="2"/>
+        <rect x="47" y="86" width="46" height="10" rx="2" fill="#c96a3d"/>
+        <g stroke="#3f6b3a" stroke-width="3" fill="none" stroke-linecap="round">
+          <line x1="70" y1="92" x2="70" y2="45"/>
+          <line x1="70" y1="70" x2="48" y2="55"/>
+          <line x1="70" y1="60" x2="92" y2="45"/>
+        </g>
+        <g fill="#4f9a4a">
+          <ellipse cx="70" cy="40" rx="12" ry="9" transform="rotate(0 70 40)"/>
+          <ellipse cx="45" cy="52" rx="11" ry="8" transform="rotate(-25 45 52)"/>
+          <ellipse cx="95" cy="42" rx="11" ry="8" transform="rotate(25 95 42)"/>
+          <ellipse cx="55" cy="70" rx="10" ry="7" transform="rotate(-15 55 70)"/>
+          <ellipse cx="85" cy="68" rx="10" ry="7" transform="rotate(15 85 68)"/>
+        </g>
+      </svg>
+    </div>
+    <h3>Basilinda Herbington-Sage</h3>
+    <p class="title">Director of Aromatics</p>
+    <p class="bio">Basilinda brings the flavor — literally. She's the reason the office smells amazing and the unofficial reason lunch always tastes better. A bit high-maintenance, but the team agrees she's worth every drop of water.</p>
+  </div>
+
+  <div class="team-member">
+    <div class="leaf-tag">🌸</div>
+    <div class="member-photo">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Petunia Blossomberg-Vine, a flowering plant in a pot">
+        <rect width="140" height="140" fill="#faf0f5"/>
+        <ellipse cx="70" cy="120" rx="45" ry="8" fill="#c9c2ae" opacity="0.5"/>
+        <path d="M44 130 L51 94 L89 94 L96 130 Z" fill="#7fae6d"/>
+        <path d="M44 130 L51 94 L89 94 L96 130 Z" fill="none" stroke="#5f8f52" stroke-width="2"/>
+        <rect x="48" y="88" width="44" height="10" rx="2" fill="#8fbf7d"/>
+        <g stroke="#3f6b3a" stroke-width="3" fill="none" stroke-linecap="round">
+          <line x1="70" y1="94" x2="70" y2="55"/>
+          <line x1="55" y1="80" x2="40" y2="65"/>
+          <line x1="85" y1="78" x2="100" y2="62"/>
+        </g>
+        <g fill="#4f8a45">
+          <ellipse cx="40" cy="62" rx="9" ry="5" transform="rotate(-30 40 62)"/>
+          <ellipse cx="100" cy="59" rx="9" ry="5" transform="rotate(30 100 59)"/>
+        </g>
+        <g transform="translate(70,42)">
+          <g fill="#e07fb0">
+            <ellipse cx="0" cy="-12" rx="9" ry="14"/>
+            <ellipse cx="0" cy="12" rx="9" ry="14"/>
+            <ellipse cx="-12" cy="0" rx="14" ry="9"/>
+            <ellipse cx="12" cy="0" rx="14" ry="9"/>
+          </g>
+          <circle cx="0" cy="0" r="7" fill="#f4d94e"/>
+        </g>
+        <g transform="translate(42,42)">
+          <g fill="#eda3c6">
+            <ellipse cx="0" cy="-8" rx="6" ry="9"/>
+            <ellipse cx="0" cy="8" rx="6" ry="9"/>
+            <ellipse cx="-8" cy="0" rx="9" ry="6"/>
+            <ellipse cx="8" cy="0" rx="9" ry="6"/>
+          </g>
+          <circle cx="0" cy="0" r="4.5" fill="#f4d94e"/>
+        </g>
+        <g transform="translate(98,38)">
+          <g fill="#eda3c6">
+            <ellipse cx="0" cy="-8" rx="6" ry="9"/>
+            <ellipse cx="0" cy="8" rx="6" ry="9"/>
+            <ellipse cx="-8" cy="0" rx="9" ry="6"/>
+            <ellipse cx="8" cy="0" rx="9" ry="6"/>
+          </g>
+          <circle cx="0" cy="0" r="4.5" fill="#f4d94e"/>
+        </g>
+      </svg>
+    </div>
+    <h3>Petunia Blossomberg-Vine</h3>
+    <p class="title">Vice President of Vibes</p>
+    <p class="bio">Petunia showed up one spring and never left, blooming her way straight into a leadership role. She's in charge of morale, aesthetics, and reminding everyone to appreciate the little things, like sunlight, and each other.</p>
+  </div>
+
+</section>
+
+<section id="services">
+  <h2>Our Services</h2>
+  <div class="service-box">
+    <div class="icon">🌬️</div>
+    <h3>Air Purification</h3>
+    <p>We quietly filter your office air while you take credit for it in meetings.</p>
+  </div>
+  <div class="service-box">
+    <div class="icon">🎨</div>
+    <h3>Desk Decor</h3>
+    <p>Instant style upgrade for any cubicle, no interior designer required.</p>
+  </div>
+  <div class="service-box">
+    <div class="icon">😊</div>
+    <h3>Morale Boosting</h3>
+    <p>Studies show looking at us for five seconds reduces stress. Probably.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="open-badge">Open for Watering</div>
+  <h2>Contact Us</h2>
+  <div class="contact-box">
+    <p><strong>Email:</strong> Vegetarians.are.evil@gmail.com</p>
+    <p><strong>Office Hours:</strong> Whenever there's sunlight</p>
+    <p><strong>Location:</strong> The windowsill nearest the coffee machine</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  &copy; 2026 The Leafy Business Team. All rights reserved (and watered regularly).
+</footer>
+
+</body>
+</html>
