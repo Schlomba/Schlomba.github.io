@@ -1,0 +1,104 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Verdana, Arial, sans-serif;
+  background-color: #eef2f3;
+  color: #222;
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #1b4332;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+p.subtitle {
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+nav.site-nav {
+  margin-bottom: 30px;
+}
+
+nav.site-nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #1b4332;
+  font-weight: bold;
+  padding: 6px 12px;
+  border: 2px solid #1b4332;
+  border-radius: 6px;
+}
+
+/* Pseudo class: :hover */
+nav.site-nav a:hover {
+  background-color: #1b4332;
+  color: #fff;
+}
+
+/* Scorecard table shared styling */
+table.scorecard {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+table.scorecard caption {
+  font-size: 1.3em;
+  font-weight: bold;
+  padding: 10px;
+  color: #1b4332;
+}
+
+table.scorecard th,
+table.scorecard td {
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+table.scorecard thead th {
+  background-color: #1b4332;
+  color: #fff;
+}
+
+/* Pseudo class: :nth-child for zebra striping */
+table.scorecard tbody tr:nth-child(even) {
+  background-color: #f2f6f4;
+}
+
+/* Pseudo class: :hover on rows for interactivity */
+table.scorecard tbody tr:hover {
+  background-color: #d9ece1;
+}
+
+/* Pseudo class: :first-child for row-header column */
+table.scorecard tbody th:first-child,
+table.scorecard tbody td:first-child {
+  font-weight: bold;
+  background-color: #e8f0ec;
+}
+
+table.scorecard tfoot td {
+  font-weight: bold;
+  background-color: #cfe3d8;
+}
+
+footer {
+  margin-top: 30px;
+  font-size: 0.85em;
+  color: #777;
+}
