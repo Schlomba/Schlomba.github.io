@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Transitions &amp; Animations Review Cards</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #1e1b4b, #4c1d95, #0f766e);
+    background-size: 300% 300%;
+    animation: bgShift 14s ease infinite;
+    padding: 24px 16px 48px;
+  }
+
+  /* ---------- Title + page-load animations ---------- */
+  header { text-align: center; margin-bottom: 36px; }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    letter-spacing: 2px;
+    animation: dropIn 1.2s cubic-bezier(.2, 1.4, .4, 1) both;
+  }
+  h1 span { color: #fde047; display: inline-block; animation: wobble 1.4s 1.2s ease-in-out 2; }
+
+  .subtitle {
+    margin: 10px 0 0;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+  }
+
+  @keyframes dropIn {
+    0%   { transform: translateY(-160px) scale(.6); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes bgShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes cardPop {
+    from { opacity: 0; transform: translateY(40px) scale(.9); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Card layout ---------- */
+  .grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+  }
+
+  .card {
+    position: relative;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff18;
+    border: 2px solid #ffffff55;
+    box-shadow: 0 8px 20px #0006;
+    cursor: pointer;
+    animation: cardPop .6s ease both;
+    transition: box-shadow .4s, border-color .4s;
+  }
+  .card:nth-child(1) { animation-delay: 1.2s; }
+  .card:nth-child(2) { animation-delay: 1.35s; }
+  .card:nth-child(3) { animation-delay: 1.5s; }
+  .card:nth-child(4) { animation-delay: 1.65s; }
+  .card:nth-child(5) { animation-delay: 1.8s; }
+  .card:nth-child(6) { animation-delay: 1.95s; }
+  .card:nth-child(7) { animation-delay: 2.1s; }
+  .card:nth-child(8) { animation-delay: 2.25s; }
+
+  .card:hover, .card:focus {
+    box-shadow: 0 0 26px #fde047aa;
+    border-color: #fde047;
+    outline: none;
+  }
+
+  .term, .answer {
+    position: absolute;
+    inset: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .term { font-size: 1.25rem; font-weight: bold; }
+  .term small { display: block; font-weight: normal; font-size: .8rem; opacity: .7; margin-top: 8px; }
+
+  .answer {
+    font-size: .98rem;
+    line-height: 1.4;
+    background: #fde047;
+    color: #1e1b4b;
+    transition: all .6s ease;
+  }
+
+  /* ---------- Different reveal transitions ---------- */
+
+  /* 1. Slide up from the bottom */
+  .r-slide .answer { transform: translateY(100%); }
+  .r-slide:hover .answer, .r-slide:focus .answer { transform: translateY(0); }
+
+  /* 2. Fade in + unblur */
+  .r-fade .answer { opacity: 0; filter: blur(12px); background: #5eead4; }
+  .r-fade:hover .answer, .r-fade:focus .answer { opacity: 1; filter: blur(0); }
+
+  /* 3. Curtain opens from the middle */
+  .r-curtain .answer { clip-path: inset(0 50% 0 50%); background: #f9a8d4; transition: clip-path .7s ease; }
+  .r-curtain:hover .answer, .r-curtain:focus .answer { clip-path: inset(0 0 0 0); }
+
+  /* 4. Zoom from tiny circle */
+  .r-zoom .answer { transform: scale(0); border-radius: 50%; background: #a5b4fc; }
+  .r-zoom:hover .answer, .r-zoom:focus .answer { transform: scale(1); border-radius: 0; }
+
+  /* 5. Slide in from left */
+  .r-left .answer { transform: translateX(-100%); background: #fdba74; }
+  .r-left:hover .answer, .r-left:focus .answer { transform: translateX(0); }
+
+  /* 6. Rotate in */
+  .r-spin .answer { transform: rotate(-90deg) scale(.2); opacity: 0; background: #86efac; transform-origin: center; }
+  .r-spin:hover .answer, .r-spin:focus .answer { transform: rotate(0) scale(1); opacity: 1; }
+
+  /* 7. Drop down from the top */
+  .r-top .answer { transform: translateY(-100%); background: #fca5a5; }
+  .r-top:hover .answer, .r-top:focus .answer { transform: translateY(0); }
+
+  /* 8. Flip like a door (3D) */
+  .r-flip { perspective: 800px; }
+  .r-flip .answer { transform: rotateY(90deg); background: #93c5fd; backface-visibility: hidden; }
+  .r-flip .term { transition: transform .6s ease, opacity .6s ease; }
+  .r-flip:hover .term, .r-flip:focus .term { transform: rotateY(-90deg); opacity: 0; }
+  .r-flip:hover .answer, .r-flip:focus .answer { transform: rotateY(0); }
+
+  footer { text-align: center; margin-top: 36px; opacity: .8; font-size: .9rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01s !important; animation-delay: 0s !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CSS <span>Magic</span> Review Cards</h1>
+  <p class="subtitle">Hover over (or tab to) a card to reveal the answer!</p>
+</header>
+
+<main class="grid">
+
+  <div class="card r-slide" tabindex="0">
+    <div class="term">transition-property<small>What does it do?</small></div>
+    <div class="answer">Chooses which CSS property (or "all") will change gradually instead of instantly.</div>
+  </div>
+
+  <div class="card r-fade" tabindex="0">
+    <div class="term">transition-duration<small>What does it do?</small></div>
+    <div class="answer">Sets how long a transition takes to finish, in seconds (s) or milliseconds (ms).</div>
+  </div>
+
+  <div class="card r-curtain" tabindex="0">
+    <div class="term">transition-timing-function<small>What does it do?</small></div>
+    <div class="answer">Controls the speed curve of a transition, like ease, linear, ease-in, or ease-out.</div>
+  </div>
+
+  <div class="card r-zoom" tabindex="0">
+    <div class="term">transition-delay<small>What does it do?</small></div>
+    <div class="answer">Makes the browser wait a set amount of time before a transition starts.</div>
+  </div>
+
+  <div class="card r-left" tabindex="0">
+    <div class="term">@keyframes<small>What is it?</small></div>
+    <div class="answer">A rule that defines the steps of an animation, using from/to or percentages like 0%, 50%, 100%.</div>
+  </div>
+
+  <div class="card r-spin" tabindex="0">
+    <div class="term">animation-iteration-count<small>What does it do?</small></div>
+    <div class="answer">Sets how many times an animation plays. Use "infinite" to repeat forever.</div>
+  </div>
+
+  <div class="card r-top" tabindex="0">
+    <div class="term">animation-direction<small>What does it do?</small></div>
+    <div class="answer">Decides whether an animation plays forward, backward, or alternates back and forth.</div>
+  </div>
+
+  <div class="card r-flip" tabindex="0">
+    <div class="term">Transition vs. Animation<small>What's the difference?</small></div>
+    <div class="answer">A transition needs a trigger (like :hover) and goes from one state to another. An animation can run on its own with multiple steps.</div>
+  </div>
+
+</main>
+
+<footer>Review Cards Assignment &middot; HTML &amp; CSS only</footer>
+
+</body>
+</html>
