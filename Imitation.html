@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Imitation Assignment</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Georgia, serif;
+      background: #1f2430;
+      color: #f2f2f2;
+    }
+    h1 { text-align: center; margin: 0 0 24px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    figure {
+      margin: 0;
+      padding: 16px;
+      background: #2b3242;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    figcaption { margin-top: 12px; font-size: 0.95rem; opacity: 0.85; text-align: center; }
+    svg { display: block; max-width: 100%; height: auto; }
+
+    /* ===== 1. Butterfly: rounded corners + soft box-shadow ===== */
+    .butterfly {
+      width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ===== 2. Dinosaur: white background card + soft drop-shadow ===== */
+    .dino-wrap {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .dino {
+      width: 260px;
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.25));
+    }
+
+    /* ===== 3. Football field: tic-tac-toe heart layered on top, blended ===== */
+    .field-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .field { width: 100%; filter: brightness(1.1) saturate(1.2); }
+    .ttt {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 94%;
+      width: auto;
+      transform: translate(-50%, -50%);
+      opacity: 0.85;
+      mix-blend-mode: multiply;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+    }
+
+    /* ===== 4. Penguins: rounded corners + box-shadow ===== */
+    .penguins {
+      width: 450px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ===== 5. Seagull: white background card + soft drop-shadow ===== */
+    .white-bg {
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .seagull {
+      width: 100%;
+      filter: drop-shadow(0 12px 8px rgba(0, 0, 0, 0.22));
+    }
+
+    /* ===== 6. Theater stage: radial-gradient vignette overlay ===== */
+    .stage-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .stage { width: 100%; }
+    .stage-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>The Imitation Assignment</h1>
+
+  <div class="grid">
+
+    <!-- 1. BUTTERFLY -->
+    <figure>
+      <svg class="butterfly" viewBox="0 0 400 243" role="img" aria-label="Monarch butterfly on pale yellow flowers">
+        <defs>
+          <filter id="blurBg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.2"/></filter>
+          <radialGradient id="bgGreen" cx="50%" cy="45%" r="75%">
+            <stop offset="0" stop-color="#9fae6a"/><stop offset="1" stop-color="#5d7a36"/>
+          </radialGradient>
+          <radialGradient id="orange" gradientUnits="userSpaceOnUse" cx="205" cy="125" r="190">
+            <stop offset="0" stop-color="#f9a51b"/><stop offset="1" stop-color="#ee7f10"/>
+          </radialGradient>
+
+          <g id="flower">
+            <g fill="currentColor">
+              <ellipse cx="0" cy="-27" rx="8" ry="22"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(30)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(90)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(150)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(210)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(270)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(300)"/>
+              <ellipse cx="0" cy="-27" rx="8" ry="22" transform="rotate(330)"/>
+            </g>
+            <circle r="13" fill="#e9b02e"/>
+          </g>
+
+          <!-- one wing (right side); the left side is a mirrored copy -->
+          <path id="wingPath" d="M205 92 C250 72 330 72 386 112 C390 120 380 130 362 140 C340 152 295 166 250 162 C226 160 212 148 205 136 Z
+                                 M205 138 C240 138 276 158 284 188 C288 206 264 218 246 211 C226 203 208 172 205 138 Z"/>
+          <clipPath id="clipWing"><use href="#wingPath"/></clipPath>
+
+          <g id="wingR">
+            <use href="#wingPath" fill="url(#orange)"/>
+            <g clip-path="url(#clipWing)">
+              <!-- thick black border (half of the stroke falls outside and is clipped) -->
+              <use href="#wingPath" fill="none" stroke="#111" stroke-width="15" stroke-linejoin="round"/>
+              <!-- veins -->
+              <g stroke="#111" stroke-width="4.4" fill="none" stroke-linecap="round">
+                <path d="M208 112 C260 104 330 106 384 116" stroke-width="5.5"/>
+                <path d="M208 118 C262 118 322 130 366 138"/>
+                <path d="M210 122 C250 130 300 146 340 154"/>
+                <path d="M212 126 C240 140 262 152 290 164"/>
+                <path d="M214 100 C250 90 300 88 352 100"/>
+                <path d="M216 108 C262 98 316 96 372 106" stroke-width="3"/>
+                <path d="M300 92 C304 110 304 126 298 146"/>
+                <path d="M340 98 C344 114 344 130 338 150"/>
+                <path d="M262 88 C264 110 264 132 260 154"/>
+                <path d="M208 142 C226 160 240 182 246 210" stroke-width="5"/>
+                <path d="M210 140 C240 148 264 170 274 196"/>
+                <path d="M212 138 C248 142 272 158 282 184"/>
+                <path d="M244 150 C256 160 262 172 264 184" stroke-width="3"/>
+              </g>
+              <!-- white dots on the border -->
+              <use href="#wingPath" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"
+                   stroke-dasharray="0.1 9" transform="translate(205 125) scale(.965) translate(-205 -125)"/>
+              <use href="#wingPath" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"
+                   stroke-dasharray="0.1 14" transform="translate(205 125) scale(.93) translate(-205 -125)"/>
+            </g>
+          </g>
+        </defs>
+
+        <rect width="400" height="243" fill="url(#bgGreen)"/>
+        <g filter="url(#blurBg)">
+          <ellipse cx="170" cy="120" rx="60" ry="30" fill="#4f6b2c" opacity=".5"/>
+          <ellipse cx="330" cy="170" rx="60" ry="30" fill="#4f6b2c" opacity=".45"/>
+          <use href="#flower" x="22" y="26" color="#f6e8b4" transform="translate(0 0) scale(1.15)"/>
+          <use href="#flower" x="92" y="14" color="#f4e3a0"/>
+          <use href="#flower" x="20" y="160" color="#f6e8b4" transform="scale(1)"/>
+          <use href="#flower" x="62" y="215" color="#f7ecc0"/>
+          <use href="#flower" x="232" y="228" color="#f8efc8" transform="translate(-56 -52) scale(1.25)"/>
+          <use href="#flower" x="385" y="222" color="#f2deb0"/>
+          <use href="#flower" x="372" y="22" color="#f0d890"/>
+          <use href="#flower" x="228" y="54" color="#f4d878"/>
+          <use href="#flower" x="330" y="215" color="#f5e6b0" transform="translate(0 0) scale(.8)"/>
+        </g>
+
+        <use href="#wingR"/>
+        <use href="#wingR" transform="translate(410 0) scale(-1 1)"/>
+
+        <ellipse cx="205" cy="126" rx="5.8" ry="36" fill="#141414"/>
+        <circle cx="205" cy="88" r="6.8" fill="#141414"/>
+        <g fill="#fff"><circle cx="203" cy="99" r="1.3"/><circle cx="207" cy="106" r="1.3"/><circle cx="203" cy="113" r="1.3"/><circle cx="207" cy="82" r="1.2"/><circle cx="203" cy="84" r="1.2"/></g>
+        <path d="M203 84 C190 60 182 40 172 22 M207 84 C218 60 226 40 236 20" stroke="#111" stroke-width="1.6" fill="none"/>
+        <circle cx="171" cy="21" r="2.4" fill="#111"/><circle cx="237" cy="19" r="2.4" fill="#111"/>
+      </svg>
+      <figcaption>1. Butterfly: border-radius, box-shadow</figcaption>
+    </figure>
+
+    <!-- 2. DINOSAUR -->
+    <figure>
+      <div class="dino-wrap">
+        <svg class="dino" viewBox="0 0 460 480" role="img" aria-label="Green cartoon dinosaur">
+          <path d="M230 100 C200 130 215 170 190 230 C170 270 120 300 70 322 C50 328 35 330 28 332 C60 345 110 372 160 390 C200 395 250 390 300 385 L330 330 C350 300 360 250 345 200 C335 170 330 150 340 120 Z" fill="#24b36a"/>
+          <path d="M225 110 C190 150 200 200 170 250 C150 280 110 300 60 325 C120 335 170 305 205 255 C230 205 225 150 225 110 Z" fill="#12874f"/>
+          <g fill="#0e6b3f">
+            <ellipse cx="170" cy="295" rx="14" ry="10" transform="rotate(-30 170 295)"/>
+            <ellipse cx="125" cy="318" rx="9" ry="6"/><ellipse cx="205" cy="225" rx="8" ry="12"/>
+            <ellipse cx="185" cy="260" rx="6" ry="9"/><ellipse cx="90" cy="333" rx="6" ry="4"/>
+          </g>
+          <path d="M305 185 C335 210 350 260 340 320 C330 352 300 372 268 388 C285 330 292 250 305 185 Z" fill="#aad24b"/>
+          <path d="M235 300 C252 340 258 382 252 415 C250 440 220 448 205 440 C198 430 215 420 226 410 C226 380 216 350 200 320 Z" fill="#24b36a"/>
+          <ellipse cx="220" cy="436" rx="26" ry="10" fill="#24b36a"/>
+          <ellipse cx="206" cy="440" rx="4" ry="2.5" fill="#6b2f2a"/><ellipse cx="226" cy="442" rx="4" ry="2.5" fill="#6b2f2a"/>
+          <path d="M300 335 C330 355 352 378 396 390 C402 402 385 422 358 426 C346 416 340 402 328 396 C308 386 284 366 280 346 Z" fill="#12874f"/>
+          <ellipse cx="372" cy="410" rx="26" ry="9" fill="#12874f" transform="rotate(-20 372 410)"/>
+          <ellipse cx="375" cy="408" rx="12" ry="6" fill="#7a4a3d" transform="rotate(-20 375 408)"/>
+          <ellipse cx="270" cy="350" rx="38" ry="28" fill="#5cc183" transform="rotate(-20 270 350)"/>
+          <ellipse cx="268" cy="388" rx="5" ry="3" fill="#0e6b3f"/>
+          <path d="M270 240 C290 232 320 238 340 245 C345 252 335 258 325 256 C305 254 290 258 272 252 Z" fill="#24b36a"/>
+          <path d="M335 238 C352 232 372 240 376 248 C370 256 356 250 345 252 Z" fill="#24b36a"/>
+          <path d="M225 50 C260 25 330 40 400 80 C440 100 435 150 405 165 C360 180 300 170 260 150 C225 130 205 80 225 50 Z" fill="#24b36a"/>
+          <ellipse cx="345" cy="78" rx="78" ry="30" fill="#5cc183" transform="rotate(14 345 78)"/>
+          <path d="M250 108 C300 135 360 142 408 132 C396 162 340 174 300 166 C270 156 256 130 250 108 Z" fill="#7a0f2e"/>
+          <g fill="#fff">
+            <path d="M268 118 L276 134 L284 122 Z"/><path d="M292 128 L300 144 L308 132 Z"/>
+            <path d="M318 134 L326 150 L334 136 Z"/><path d="M344 138 L352 152 L360 138 Z"/>
+            <path d="M370 138 L378 150 L384 136 Z"/>
+          </g>
+          <ellipse cx="402" cy="112" rx="6" ry="11" fill="#12874f" transform="rotate(-12 402 112)"/>
+          <ellipse cx="296" cy="54" rx="17" ry="18" fill="#12874f"/>
+          <circle cx="296" cy="54" r="13" fill="#d6e84a"/>
+          <ellipse cx="297" cy="53" rx="5" ry="9" fill="#1b2a10"/>
+          <circle cx="299" cy="49" r="2.5" fill="#fff"/>
+        </svg>
+      </div>
+      <figcaption>2. Dinosaur: drop-shadow on a white background</figcaption>
+    </figure>
+
+    <!-- 3. FOOTBALL FIELD + TIC-TAC-TOE HEART -->
+    <figure>
+      <div class="field-wrap">
+        <svg class="field" viewBox="0 0 500 230" role="img" aria-label="Football field seen from above">
+          <defs>
+            <linearGradient id="grass" x1="0" x2="1">
+              <stop offset="0" stop-color="#6fa82a"/><stop offset=".5" stop-color="#78b32e"/><stop offset="1" stop-color="#6fa82a"/>
+            </linearGradient>
+          </defs>
+          <rect width="500" height="230" fill="#3f6b1d"/>
+          <rect x="42" width="416" height="230" fill="url(#grass)"/>
+          <g fill="#fff" opacity=".07">
+            <rect x="42" width="41.6" height="230"/><rect x="125.2" width="41.6" height="230"/>
+            <rect x="208.4" width="41.6" height="230"/><rect x="291.6" width="41.6" height="230"/>
+            <rect x="374.8" width="41.6" height="230"/>
+          </g>
+          <g stroke="#fff" stroke-width="1.8">
+            <line x1="42" x2="42" y1="0" y2="230"/><line x1="458" x2="458" y1="0" y2="230"/>
+            <line x1="83.6" x2="83.6" y1="0" y2="230"/><line x1="125.2" x2="125.2" y1="0" y2="230"/>
+            <line x1="166.8" x2="166.8" y1="0" y2="230"/><line x1="208.4" x2="208.4" y1="0" y2="230"/>
+            <line x1="250" x2="250" y1="0" y2="230"/><line x1="291.6" x2="291.6" y1="0" y2="230"/>
+            <line x1="333.2" x2="333.2" y1="0" y2="230"/><line x1="374.8" x2="374.8" y1="0" y2="230"/>
+            <line x1="416.4" x2="416.4" y1="0" y2="230"/>
+          </g>
+          <g stroke="#fff" stroke-width="1.2" stroke-dasharray="1.4 2.6">
+            <line x1="42" x2="458" y1="95" y2="95"/><line x1="42" x2="458" y1="133" y2="133"/>
+          </g>
+          <g stroke="#fff" stroke-width="1.4" stroke-dasharray="1.4 3.2">
+            <line x1="42" x2="458" y1="2" y2="2"/><line x1="42" x2="458" y1="228" y2="228"/>
+          </g>
+          <g fill="#fff" font-family="Georgia, serif" font-weight="bold" font-size="22" text-anchor="middle">
+            <g transform="rotate(180 250 40)">
+              <text x="83.6" y="45">10</text><text x="125.2" y="45">20</text><text x="166.8" y="45">30</text>
+              <text x="208.4" y="45">40</text><text x="250" y="45">50</text><text x="291.6" y="45">40</text>
+              <text x="333.2" y="45">30</text><text x="374.8" y="45">20</text><text x="416.4" y="45">10</text>
+            </g>
+            <text x="83.6" y="196">10</text><text x="125.2" y="196">20</text><text x="166.8" y="196">30</text>
+            <text x="208.4" y="196">40</text><text x="250" y="196">50</text><text x="291.6" y="196">40</text>
+            <text x="333.2" y="196">30</text><text x="374.8" y="196">20</text><text x="416.4" y="196">10</text>
+          </g>
+        </svg>
+
+        <svg class="ttt" viewBox="0 0 160 160" role="img" aria-label="Tic-tac-toe board with a heart">
+          <rect width="160" height="160" fill="#fff"/>
+          <g stroke="#2e2e2e" stroke-width="3.5" stroke-linecap="square">
+            <line x1="54" x2="54" y1="4" y2="156"/><line x1="106" x2="106" y1="4" y2="156"/>
+            <line x1="4" x2="156" y1="54" y2="54"/><line x1="4" x2="156" y1="106" y2="106"/>
+            <rect x="2" y="2" width="156" height="156" fill="none"/>
+          </g>
+          <g font-family="Georgia, serif" font-weight="bold" font-size="34" fill="#2e2e2e" text-anchor="middle">
+            <text x="28" y="40">X</text><text x="80" y="40">O</text><text x="132" y="40">X</text>
+            <text x="28" y="92">O</text><text x="132" y="92">O</text>
+            <text x="28" y="144">X</text><text x="80" y="144">O</text><text x="132" y="144">X</text>
+          </g>
+          <path d="M80 98 C58 82 62 62 74 62 C79 62 80 66 80 68 C80 66 81 62 86 62 C98 62 102 82 80 98 Z" fill="#c4202e" transform="translate(0 -2)"/>
+        </svg>
+      </div>
+      <figcaption>3. Football field: layered images, mix-blend-mode, opacity</figcaption>
+    </figure>
+
+    <!-- 4. PENGUINS -->
+    <figure>
+      <svg class="penguins" viewBox="0 0 450 300" role="img" aria-label="Emperor penguin with grey chicks on snow">
+        <defs>
+          <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f7f8fa"/><stop offset="1" stop-color="#e5e9ef"/>
+          </linearGradient>
+          <linearGradient id="chickBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#b9b8ba"/><stop offset="1" stop-color="#9a999d"/>
+          </linearGradient>
+          <linearGradient id="adultBelly" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fffdf0"/><stop offset=".7" stop-color="#f4f0da"/><stop offset="1" stop-color="#d9d6c4"/>
+          </linearGradient>
+
+          <!-- a fluffy chick, facing left, 90 x 140 -->
+          <g id="chick">
+            <ellipse cx="45" cy="134" rx="30" ry="6" fill="#000" opacity=".12"/>
+            <path d="M45 50 C8 50 0 98 6 126 C10 140 80 140 84 126 C90 98 82 50 45 50 Z" fill="url(#chickBody)"/>
+            <ellipse cx="40" cy="100" rx="22" ry="32" fill="#c8c7c9" opacity=".75"/>
+            <path d="M10 70 C-2 96 -2 122 12 130 C16 110 16 90 18 74 Z" fill="#8e8d92"/>
+            <path d="M80 70 C92 96 92 122 78 130 C74 110 74 90 72 74 Z" fill="#8e8d92"/>
+            <path d="M45 8 C72 8 78 32 72 52 C62 64 28 64 18 52 C12 32 18 8 45 8 Z" fill="#151517"/>
+            <ellipse cx="35" cy="37" rx="13" ry="17" fill="#f3f3f1"/>
+            <circle cx="30" cy="32" r="2.8" fill="#111"/>
+            <path d="M24 42 L12 46 L24 49 Z" fill="#2b2b2e"/>
+            <ellipse cx="26" cy="137" rx="12" ry="3.5" fill="#1f1f22"/><ellipse cx="62" cy="137" rx="12" ry="3.5" fill="#1f1f22"/>
+          </g>
+        </defs>
+
+        <rect width="450" height="300" fill="url(#snow)"/>
+        <ellipse cx="225" cy="272" rx="225" ry="24" fill="#d8dee6" opacity=".7"/>
+
+        <!-- back row -->
+        <use href="#chick" transform="translate(151 101) scale(.75)"/>
+        <use href="#chick" transform="translate(343.5 71) scale(-.9 .9)"/>
+        <use href="#chick" transform="translate(412 96) scale(-1 1)"/>
+
+        <!-- adult emperor penguin -->
+        <g>
+          <ellipse cx="226" cy="258" rx="36" ry="8" fill="#000" opacity=".1"/>
+          <ellipse cx="226" cy="172" rx="33" ry="84" fill="url(#adultBelly)"/>
+          <path d="M246 98 C272 112 278 166 262 214 C252 182 246 146 240 112 Z" fill="#26282d"/>
+          <path d="M204 100 C190 124 190 170 204 208 C204 172 206 140 210 108 Z" fill="#3a3c42"/>
+          <ellipse cx="217" cy="78" rx="27" ry="25" fill="#101012"/>
+          <path d="M232 72 C246 70 252 84 246 100 C240 94 234 86 232 72 Z" fill="#f5cf55"/>
+          <path d="M192 70 L174 76 L192 83 Z" fill="#232326"/>
+          <path d="M192 73 L178 76 L192 79 Z" fill="#ee8a2c"/>
+          <circle cx="206" cy="68" r="2" fill="#fff" opacity=".8"/>
+          <ellipse cx="212" cy="255" rx="16" ry="4" fill="#1d1d20"/><ellipse cx="240" cy="255" rx="16" ry="4" fill="#1d1d20"/>
+        </g>
+
+        <!-- front row -->
+        <use href="#chick" transform="translate(378.5 121) scale(-.9 .9)"/>
+        <use href="#chick" transform="translate(243 108) scale(1.05)"/>
+        <use href="#chick" transform="translate(55 92) scale(1.1)"/>
+        <use href="#chick" transform="translate(105 108)"/>
+      </svg>
+      <figcaption>4. Penguins: border-radius, box-shadow</figcaption>
+    </figure>
+
+    <!-- 5. SEAGULL -->
+    <figure>
+      <div class="white-bg">
+        <svg class="seagull" viewBox="0 0 540 400" role="img" aria-label="Seagull in flight, facing right">
+          <defs>
+            <linearGradient id="wingL" gradientUnits="userSpaceOnUse" x1="28" y1="62" x2="210" y2="200">
+              <stop offset="0" stop-color="#2c2c2c"/><stop offset=".07" stop-color="#6e6e6e"/>
+              <stop offset=".2" stop-color="#d9d9d9"/><stop offset=".4" stop-color="#ffffff"/><stop offset="1" stop-color="#f1f1f1"/>
+            </linearGradient>
+            <linearGradient id="wingUnder" gradientUnits="userSpaceOnUse" x1="60" y1="80" x2="214" y2="250">
+              <stop offset="0" stop-color="#9a9a9a"/><stop offset="1" stop-color="#d8d8d8"/>
+            </linearGradient>
+            <linearGradient id="wingRg" gradientUnits="userSpaceOnUse" x1="300" y1="0" x2="505" y2="0">
+              <stop offset="0" stop-color="#dcdcdc"/><stop offset=".45" stop-color="#9a9a9a"/><stop offset=".85" stop-color="#5a5a5a"/><stop offset="1" stop-color="#1c1c1c"/>
+            </linearGradient>
+            <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d4d4d4"/>
+            </linearGradient>
+          </defs>
+
+          <!-- raised left wing -->
+          <path d="M28 62 C100 52 215 100 268 215 L214 250 C150 220 78 150 28 62 Z" fill="url(#wingL)"/>
+          <!-- grey under-feathers -->
+          <path d="M60 86 C112 112 158 150 186 204 L214 250 C158 222 96 160 60 86 Z" fill="url(#wingUnder)" opacity=".85"/>
+          <g stroke="#7d7d7d" stroke-width="1.6" fill="none" opacity=".65" stroke-linecap="round">
+            <path d="M74 92 C124 118 164 156 196 214"/><path d="M92 100 C138 126 174 166 202 224"/>
+            <path d="M112 112 C152 138 186 176 208 232"/><path d="M60 82 C116 104 168 140 204 196"/>
+          </g>
+          <g stroke="#bdbdbd" stroke-width="1.4" fill="none" opacity=".8">
+            <path d="M120 76 C170 100 220 150 248 214"/><path d="M160 80 C204 108 246 160 262 210"/>
+          </g>
+
+          <!-- tail and feet -->
+          <path d="M214 262 C192 286 186 306 212 304 C234 298 248 282 254 266 Z" fill="#e9e9e9"/>
+          <path d="M214 306 C230 312 244 314 236 324 C224 322 212 318 204 312 Z" fill="#c6782a"/>
+          <path d="M222 304 C238 306 250 310 244 318 C234 318 224 314 218 310 Z" fill="#d68b38"/>
+
+          <!-- body -->
+          <ellipse cx="262" cy="254" rx="76" ry="31" fill="url(#bodyG)" transform="rotate(-18 262 254)"/>
+          <path d="M214 268 C240 288 290 286 318 262 C300 276 250 280 214 268 Z" fill="#c2c2c2" opacity=".7"/>
+
+          <!-- right wing -->
+          <path d="M296 244 C352 230 436 234 506 292 L498 301 C440 293 362 292 298 270 Z" fill="url(#wingRg)"/>
+          <g stroke="#6b6b6b" stroke-width="1.3" fill="none" opacity=".55">
+            <path d="M330 252 C390 250 440 266 484 290"/><path d="M320 260 C380 262 430 276 470 296"/>
+          </g>
+          <path d="M458 268 L506 292 L498 301 L450 288 Z" fill="#151515"/>
+
+          <!-- head and beak (facing right) -->
+          <ellipse cx="296" cy="238" rx="22" ry="17" fill="#f6f6f6" transform="rotate(-10 296 238)"/>
+          <circle cx="316" cy="244" r="21" fill="#fcfcfc"/>
+          <path d="M334 244 C344 244 352 249 356 254 C346 258 336 258 330 256 Z" fill="#f4a21a"/>
+          <circle cx="325" cy="240" r="3.4" fill="#8a5a2a"/>
+          <circle cx="325" cy="240" r="1.4" fill="#222"/>
+        </svg>
+      </div>
+      <figcaption>5. Seagull: drop-shadow on a white background</figcaption>
+    </figure>
+
+    <!-- 6. THEATER STAGE -->
+    <figure>
+      <div class="stage-wrap">
+        <svg class="stage" viewBox="0 0 400 352" role="img" aria-label="Theater stage with red curtains, spotlights and red seats">
+          <defs>
+            <linearGradient id="foldsBack" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="20" y2="0" spreadMethod="repeat">
+              <stop offset="0" stop-color="#8f0d12"/><stop offset=".4" stop-color="#d3282b"/><stop offset=".65" stop-color="#b3151a"/><stop offset="1" stop-color="#7d0a0f"/>
+            </linearGradient>
+            <linearGradient id="foldsSide" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="repeat">
+              <stop offset="0" stop-color="#9a0c11"/><stop offset=".35" stop-color="#e03235"/><stop offset=".6" stop-color="#b9161b"/><stop offset="1" stop-color="#7a090d"/>
+            </linearGradient>
+            <linearGradient id="shadeL" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="95" y2="0">
+              <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/>
+            </linearGradient>
+            <linearGradient id="shadeR" gradientUnits="userSpaceOnUse" x1="400" y1="0" x2="305" y2="0">
+              <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/>
+            </linearGradient>
+            <radialGradient id="wallLight" cx="50%" cy="0%" r="90%">
+              <stop offset="0" stop-color="#ff8a8a" stop-opacity=".55"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/>
+            </radialGradient>
+            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity=".4"/><stop offset="1" stop-color="#fff" stop-opacity=".22"/>
+            </linearGradient>
+            <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8a6240"/><stop offset="1" stop-color="#3d2616"/>
+            </linearGradient>
+            <radialGradient id="floorGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="seatTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e02a2e"/><stop offset="1" stop-color="#a50f15"/>
+            </linearGradient>
+            <filter id="softBeam"><feGaussianBlur stdDeviation="2.5"/></filter>
+          </defs>
+
+          <!-- back wall curtain -->
+          <rect width="400" height="214" fill="url(#foldsBack)"/>
+          <rect width="400" height="214" fill="url(#wallLight)"/>
+
+          <!-- spotlight beams -->
+          <g filter="url(#softBeam)">
+            <polygon points="150,0 190,0 232,212 50,212" fill="url(#beam)" opacity=".5"/>
+            <polygon points="210,0 250,0 350,212 168,212" fill="url(#beam)" opacity=".5"/>
+            <polygon points="164,0 236,0 296,212 104,212" fill="url(#beam)" opacity=".5"/>
+          </g>
+
+          <!-- wooden floor in perspective -->
+          <polygon points="0,205 400,205 400,258 0,258" fill="url(#floor)"/>
+          <g stroke="#2b1a10" stroke-width="1.3" opacity=".75">
+            <line x1="-20" x2="-120" y1="205" y2="258"/><line x1="30" x2="-30" y1="205" y2="258"/>
+            <line x1="80" x2="40" y1="205" y2="258"/><line x1="130" x2="110" y1="205" y2="258"/>
+            <line x1="180" x2="170" y1="205" y2="258"/><line x1="230" x2="240" y1="205" y2="258"/>
+            <line x1="280" x2="310" y1="205" y2="258"/><line x1="330" x2="370" y1="205" y2="258"/>
+            <line x1="380" x2="440" y1="205" y2="258"/><line x1="430" x2="520" y1="205" y2="258"/>
+          </g>
+          <ellipse cx="200" cy="232" rx="125" ry="22" fill="url(#floorGlow)"/>
+          <rect y="254" width="400" height="9" fill="#2a0e0e"/>
+
+          <!-- side curtains -->
+          <path d="M0 0 H92 C72 60 98 150 76 246 H0 Z" fill="url(#foldsSide)"/>
+          <path d="M0 0 H92 C72 60 98 150 76 246 H0 Z" fill="url(#shadeL)"/>
+          <path d="M400 0 H308 C328 60 302 150 324 246 H400 Z" fill="url(#foldsSide)"/>
+          <path d="M400 0 H308 C328 60 302 150 324 246 H400 Z" fill="url(#shadeR)"/>
+
+          <!-- audience seats -->
+          <rect y="263" width="400" height="89" fill="#4d070b"/>
+          <g fill="url(#seatTop)">
+            <rect x="2" y="268" width="62" height="30" rx="7"/><rect x="68" y="268" width="62" height="30" rx="7"/>
+            <rect x="134" y="268" width="62" height="30" rx="7"/><rect x="200" y="268" width="62" height="30" rx="7"/>
+            <rect x="266" y="268" width="62" height="30" rx="7"/><rect x="332" y="268" width="66" height="30" rx="7"/>
+          </g>
+          <g fill="url(#seatTop)">
+            <rect x="2" y="304" width="62" height="48" rx="7"/><rect x="68" y="304" width="62" height="48" rx="7"/>
+            <rect x="134" y="304" width="62" height="48" rx="7"/><rect x="200" y="304" width="62" height="48" rx="7"/>
+            <rect x="266" y="304" width="62" height="48" rx="7"/><rect x="332" y="304" width="66" height="48" rx="7"/>
+          </g>
+        </svg>
+      </div>
+      <figcaption>6. Theater stage: radial-gradient vignette overlay</figcaption>
+    </figure>
+
+  </div>
+</body>
+</html>
